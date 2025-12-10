@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>圣诞 · 臻选工坊</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      :root {
+        --christmas-red: #D32F2F;
+        --christmas-dark-red: #B71C1C;
+        --christmas-cream: #FFF9F0;
+        --gift-bg: #FFEBEE;
+      }
+      
+      body {
+        font-family: 'ZCOOL KuaiLe', cursive, system-ui, sans-serif;
+        overscroll-behavior: none;
+        background-color: var(--gift-bg);
+        /* Red Gift Wrap Background */
+        background-image: 
+          repeating-linear-gradient(
+            45deg,
+            #FFCDD2,
+            #FFCDD2 20px,
+            #FFEBEE 20px,
+            #FFEBEE 40px
+          );
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+      }
+
+      /* Cute Font Class */
+      .font-cute {
+        font-family: 'ZCOOL KuaiLe', cursive;
+      }
+
+      /* --- UNBOXING ANIMATIONS (End Result) --- */
+      @keyframes lid-fly {
+        0% { transform: translateY(0) rotate(0); }
+        40% { transform: translateY(10px) rotate(-5deg); }
+        100% { transform: translateY(-120vh) rotate(15deg); opacity: 0; }
+      }
+      
+      @keyframes box-appear {
+        0% { transform: scale(0.9); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+      }
+
+      .animate-lid-open {
+        animation: lid-fly 1.2s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards;
+      }
+      
+      .animate-content-appear {
+        animation: box-appear 0.8s ease-out forwards;
+      }
+
+      /* --- BLIND BOX WRAPPING ANIMATIONS (Loading) --- */
+      
+      /* 1. Paper Slides Down to cover photo */
+      @keyframes paper-slide-down {
+        0% { transform: translateY(-100%); }
+        100% { transform: translateY(0); }
+      }
+
+      /* 2. Ribbons Grow from center */
+      @keyframes ribbon-grow-v {
+        0% { height: 0; opacity: 0; }
+        100% { height: 100%; opacity: 1; }
+      }
+      @keyframes ribbon-grow-h {
+        0% { width: 0; opacity: 0; }
+        100% { width: 100%; opacity: 1; }
+      }
+
+      /* 3. Intense Shake for Blind Box */
+      @keyframes shake-hard {
+        0% { transform: translate(1px, 1px) rotate(0deg); }
+        10% { transform: translate(-1px, -2px) rotate(-2deg); }
+        20% { transform: translate(-3px, 0px) rotate(2deg); }
+        30% { transform: translate(3px, 2px) rotate(0deg); }
+        40% { transform: translate(1px, -1px) rotate(2deg); }
+        50% { transform: translate(-1px, 2px) rotate(-2deg); }
+        60% { transform: translate(-3px, 1px) rotate(0deg); }
+        70% { transform: translate(3px, 1px) rotate(-2deg); }
+        80% { transform: translate(-1px, -1px) rotate(2deg); }
+        90% { transform: translate(1px, 2px) rotate(0deg); }
+        100% { transform: translate(1px, -2px) rotate(-1deg); }
+      }
+
+      /* 4. Floating Tools Animation */
+      @keyframes float-tool-left {
+        0% { transform: translate(0, 0) scale(0.5) rotate(0); opacity: 0; }
+        20% { opacity: 1; }
+        100% { transform: translate(-40px, -80px) scale(1.1) rotate(-20deg); opacity: 0; }
+      }
+      @keyframes float-tool-right {
+        0% { transform: translate(0, 0) scale(0.5) rotate(0); opacity: 0; }
+        20% { opacity: 1; }
+        100% { transform: translate(40px, -80px) scale(1.1) rotate(20deg); opacity: 0; }
+      }
+      @keyframes float-tool-center {
+        0% { transform: translate(0, 0) scale(0.5) rotate(0); opacity: 0; }
+        20% { opacity: 1; }
+        100% { transform: translate(0, -100px) scale(1.2) rotate(45deg); opacity: 0; }
+      }
+
+      /* Custom Range Slider (Red Style) */
+      input[type=range] {
+        -webkit-appearance: none;
+        background: transparent;
+        height: 24px;
+      }
+      input[type=range]::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 12px;
+        background: #FFEBEE; /* Light Red */
+        border-radius: 999px;
+        border: 2px solid #EF9A9A;
+        box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+      }
+      input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        height: 28px;
+        width: 28px;
+        background: radial-gradient(circle at 30% 30%, #EF5350, #D32F2F); /* 3D Red Bead */
+        border: 2px solid white;
+        border-radius: 50%;
+        margin-top: -10px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        cursor: grab;
+        transition: transform 0.1s;
+      }
+      input[type=range]:active::-webkit-slider-thumb {
+        transform: scale(1.1);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
+    "react/": "https://aistudiocdn.com/react@^19.2.1/",
+    "react": "https://aistudiocdn.com/react@^19.2.1",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.556.0",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.32.0"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
